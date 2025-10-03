@@ -7,15 +7,12 @@ struct Track {
   int stability;
 };
 
-/// Compare two Tracks and return a < b
-bool Compare(Track* a, Track* b) {
-  if (a->popularity != b->popularity) {
-    return a->popularity < b->popularity;
+// Compare two Tracks and return a <= b
+bool Compare(Track& a, Track& b) {
+  if (a.popularity != b.popularity) {
+    return a.popularity < b.popularity;
   }
-  if (a->stability != b->stability) {
-    return a->stability < b->stability;
-  }
-  return a->number < b->number;
+  return a.stability <= b.stability;
 }
 
 void Merge(Track* arr, int left, int mid, int right) {
@@ -25,7 +22,7 @@ void Merge(Track* arr, int left, int mid, int right) {
   Track* result = new Track[right - left];
 
   while (left + it1 < mid && mid + it2 < right) {
-    if (Compare(&arr[left + it1], &arr[mid + it2])) {
+    if (Compare(arr[left + it1], arr[mid + it2])) {
       result[it1 + it2] = arr[left + it1];
       it1++;
     } else {
@@ -64,7 +61,7 @@ int main() {
   int n;
   std::cin >> n;
 
-  Track* tracks = new Track[n];
+  Track tracks[100000];
   for (int i = 0; i < n; i++) {
     tracks[i].number = i + 1;
     std::cin >> tracks[i].popularity;
@@ -74,6 +71,4 @@ int main() {
   MergeSort(tracks, 0, n);
 
   for (int i = 0; i < n; i++) std::cout << tracks[i].number << " ";
-  
-  delete[] tracks;
 }

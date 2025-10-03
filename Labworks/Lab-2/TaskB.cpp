@@ -1,16 +1,20 @@
-/*
-!-STILL IN PROGRESS-!
-*/
 #include <iostream>
 
-void Swap(int* a, int* b) {
-  int t = *a;
-  *a = *b;
-  *b = t;
+void Swap(int& a, int& b) {
+  int t = a;
+  a = b;
+  b = t;
+}
+
+int Median(int& a, int& b, int& c) {
+  if ((a >= b && a <= c) || (a > c && a < b)) return a;
+  if ((b >= a && b <= c) || (b > c && b < a)) return b;
+  return c;
 }
 
 int Partition(int* arr, int left, int right) {
-  int pivot = arr[(left + right) / 2];
+  int pivot = Median(arr[left], arr[(left + right) / 2], arr[right]);
+
   int i = left;
   int j = right;
 
@@ -19,7 +23,7 @@ int Partition(int* arr, int left, int right) {
     while (arr[j] > pivot) j--;
     if (i >= j) break;
 
-    Swap(&arr[i], &arr[j]);
+    Swap(arr[i], arr[j]);
 
     i++;
     j--;
