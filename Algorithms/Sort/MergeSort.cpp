@@ -6,8 +6,8 @@ void Merge(int* arr, int left, int mid, int right) {
 
   int* result = new int[right - left];
 
-  while (left + it1 < mid && mid + it2 < right) {
-    if (arr[left + it1] < arr[mid + it2]) {
+  while ((left + it1 < mid) && (mid + it2 < right)) {
+    if (arr[left + it1] <= arr[mid + it2]) {
       result[it1 + it2] = arr[left + it1];
       it1++;
     } else {
