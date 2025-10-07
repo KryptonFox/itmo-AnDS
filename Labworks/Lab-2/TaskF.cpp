@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 
 #include <cstdint>
-#include <cstdlib>
 using namespace std;
 
 uint32_t cur = 0;  // беззнаковое 32-битное число

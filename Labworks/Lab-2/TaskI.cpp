@@ -24,18 +24,10 @@ uint32_t nextRand32(uint32_t a, uint32_t b) {
   return (x << 8) ^ y;  // число от 0 до 2^32 - 1
 }
 
-/// Возведение n в степень power
-uint32_t Pow(uint32_t n, uint32_t power) {
-  uint32_t r = 1;
-  for (uint32_t i = 0; i < power; i++) r *= n;
-  return r;
-}
+// Сортируем по байтам
+uint32_t Key(uint32_t n, uint32_t k) { return (n >> k * 8) & 0xFF; }
 
-/// Цифра числа n по индексу k с конца
-uint32_t Digit(uint32_t n, uint32_t k) { return (n / Pow(10, k)) % 10; }
-
-const int kMaxKey = 9;
-const int kCountArrLen = kMaxKey + 1;
+const int kCountArrLen = 256;
 
 void CountSort(uint32_t* arr, uint32_t* sorted, uint32_t n, uint32_t k) {
   uint32_t c[kCountArrLen];
@@ -44,7 +36,7 @@ void CountSort(uint32_t* arr, uint32_t* sorted, uint32_t n, uint32_t k) {
   };
 
   for (int i = 0; i < n; i++) {
-    c[Digit(arr[i], k)]++;
+    c[Key(arr[i], k)]++;
   }
 
   for (int i = 1; i < kCountArrLen; i++) {
@@ -52,7 +44,7 @@ void CountSort(uint32_t* arr, uint32_t* sorted, uint32_t n, uint32_t k) {
   };
 
   for (int i = n - 1; i >= 0; i--) {
-    uint32_t d = Digit(arr[i], k);
+    uint32_t d = Key(arr[i], k);
     sorted[c[d] - 1] = arr[i];
     --c[d];
   }
@@ -85,7 +77,7 @@ int main() {
       arr[i] = nextRand32(a, b);  // генерируем i-й элемент
     }
 
-    RadixSort(arr, sorted, n, 10);
+    RadixSort(arr, sorted, n, 4);
 
     for (int i = 0; i < n; i++) {
       sum += static_cast<uint64_t>(sorted[i]) * (i + 1);
