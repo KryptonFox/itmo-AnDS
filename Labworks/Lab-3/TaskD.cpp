@@ -50,9 +50,8 @@ Core ExtractMin(Core heap[], int &heap_size, bool (*cmp)(Core &a, Core &b)) {
 
 void Insert(Core key, Core heap[], int &heap_size,
             bool (*cmp)(Core &a, Core &b)) {
-  heap[heap_size] = key;
-  SiftUp(heap_size, heap, heap_size, cmp);
-  ++heap_size;
+  heap[heap_size++] = key;
+  SiftUp(heap_size - 1, heap, heap_size, cmp);
 }
 
 void BuildHeap(Core heap[], int &heap_size, bool (*cmp)(Core &a, Core &b)) {
@@ -100,4 +99,7 @@ int main() {
   }
 
   std::cout << sum << std::endl;
+
+  delete[] free_cores;
+  delete[] busy_cores;
 }
