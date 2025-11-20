@@ -8,7 +8,7 @@ public:
   Node(T value, Node<T> *next = nullptr) : value(value), next_(next) {};
 
   void SetNext(Node<T> *next) { next_ = next; }
-  Node<T> *GetNext() { return next_; };
+  Node<T> *GetNext() const { return next_; };
 
   T value;
 
@@ -72,7 +72,7 @@ public:
     prev->SetNext(prev->GetNext()->GetNext());
   };
 
-  std::optional<T> Find(std::function<bool(T)> predicate) {
+  std::optional<T> Find(std::function<bool(const T &)> predicate) const {
     Node<T> *cur = head_;
     while (cur != nullptr) {
       if (predicate(cur->value)) {
@@ -83,7 +83,7 @@ public:
     return {};
   };
 
-  T &operator[](size_t index) {
+  T &operator[](size_t index) const {
     Node<T> *cur = head_;
     for (int i = 0; i < index; ++i) {
       cur = cur->GetNext();
@@ -93,6 +93,22 @@ public:
     };
     return cur->value;
   };
+
+  bool IsEmpty() const { return head_ == nullptr; }
+
+  T &First() const {
+    if (IsEmpty()) {
+      throw -1;
+    }
+    return head_->value;
+  }
+
+  T &Last() const {
+    if (IsEmpty()) {
+      throw -1;
+    }
+    return tail_->value;
+  }
 
 private:
   Node<T> *head_ = nullptr;
@@ -126,6 +142,8 @@ int main() {
   if (finded.has_value()) {
     std::cout << finded.value() << std::endl;
   }
+
+  std::cout << list.First() << " " << list.Last() << std::endl;
 
   std::cout << list << std::endl;
 }
