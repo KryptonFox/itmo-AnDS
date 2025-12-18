@@ -1,3 +1,7 @@
+/*
+ * SECDED Hamming Coding and Encoding with parity bit
+ */
+
 #include <cstdint>
 #include <expected>
 #include <format>
