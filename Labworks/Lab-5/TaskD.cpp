@@ -1,8 +1,8 @@
-#include <iostream>
+#include <algorithm>
 #include <cstdint>
+#include <iostream>
 
-
-bool CanPlaceNodes(const int64_t* positions, int n, int k, int64_t dist) {
+bool CanPlaceNodes(const int64_t *positions, int n, int k, int64_t dist) {
   int count = 1;
   int64_t last = positions[0];
 
@@ -10,13 +10,14 @@ bool CanPlaceNodes(const int64_t* positions, int n, int k, int64_t dist) {
     if (positions[i] - last >= dist) {
       ++count;
       last = positions[i];
-      if (count >= k) return true;
+      if (count >= k)
+        return true;
     }
   }
   return count >= k;
 }
 
-int64_t MaxMinDistance(int64_t* positions, int n, int k) {
+int64_t MaxMinDistance(int64_t *positions, int n, int k) {
   int64_t left = 0;
   int64_t right = positions[n - 1] - positions[0];
   int64_t answer = 0;
@@ -37,11 +38,12 @@ int main() {
   int n, k;
   std::cin >> n >> k;
 
-  int64_t* positions = new int64_t[n];
+  int64_t *positions = new int64_t[n];
   for (int i = 0; i < n; ++i) {
     std::cin >> positions[i];
   }
 
+  std::sort(positions, positions + n);
   int64_t result = MaxMinDistance(positions, n, k);
   std::cout << result;
 
